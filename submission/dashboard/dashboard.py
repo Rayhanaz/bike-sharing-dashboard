@@ -4,6 +4,7 @@ import pandas as pd
 import seaborn as sns
 import streamlit as st
 
+# Konfigurasi Halaman
 st.set_page_config(
     page_title="Bike Sharing Dashboard", page_icon="🚲", layout="wide"
 )
@@ -22,6 +23,7 @@ def load_data():
 
 df = load_data()
 
+# Header Dashboard
 st.title("🚲 Bike Sharing Analytics Dashboard")
 st.markdown(
     "Dashboard interaktif untuk memantau performa dan pola penyewaan sepeda"
@@ -58,7 +60,7 @@ col3.metric("Hari Terdaftar", f"{len(filtered_df)} hari")
 
 st.divider()
 
-# Charts
+# Visualisasi 1: Bar Chart Rata-rata Penyewaan per Musim & Tipe Hari
 st.subheader("📊 Rata-rata Penyewaan Sepeda per Musim & Tipe Hari")
 fig1, ax1 = plt.subplots(figsize=(10, 4))
 sns.barplot(
@@ -73,8 +75,17 @@ sns.barplot(
 ax1.set_xlabel("Musim")
 ax1.set_ylabel("Rata-rata Penyewaan Harian")
 ax1.grid(axis="y", linestyle="--", alpha=0.5)
+
+# Pindahkan legend ke luar grafik (sebelah kanan)
+ax1.legend(
+    title="Tipe Hari", bbox_to_anchor=(1.02, 1), loc="upper left", borderaxespad=0
+)
+
+# Kerapian tata letak
+plt.tight_layout()
 st.pyplot(fig1)
 
+# Visualisasi 2: Boxplot Penyewaan Berdasarkan Kategori Suhu
 st.subheader("🌡️ Distribusi Penyewaan Berdasarkan Kategori Suhu")
 bins = [0, 0.3, 0.6, 1.0]
 labels = ["Dingin", "Sedang", "Panas"]
@@ -89,4 +100,6 @@ sns.boxplot(
 ax2.set_xlabel("Kategori Suhu Udara")
 ax2.set_ylabel("Total Penyewaan Harian")
 ax2.grid(axis="y", linestyle="--", alpha=0.5)
+
+plt.tight_layout()
 st.pyplot(fig2)
